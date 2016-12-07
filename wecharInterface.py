@@ -90,9 +90,16 @@ class WecharInterface:
                         string = string + info['time'] + info['context'] + '\n'
                 return self.render.replytext(fromUser,toUser,int(time.time()), string)
             else:
-                return self.render.replytext(fromUser, toUser, int(time.time()), u'公众号在处于开发阶段，功能不完善，请见谅……')
+                return self.render.replytext(fromUser, toUser, int(time.time()), u'公众号正处于开发阶段，功能不完善，请见谅……')
         elif msgType == 'image':
 			mediaId = xml.find("MediaId").text
 			return self.render.replyimage(fromUser,toUser,int(time.time()), mediaId)
+        elif msgType == 'event':
+			#return message_xml
+			if "subscribe" == xml.find("Event").text:
+				return self.render.replytext(fromUser, toUser, int(time.time()), u'欢迎关注！\n\n公众号正处于开发阶段，功能不完善，请见谅……')
+			else:
+				return "success"
+
         else:
             return "success"
